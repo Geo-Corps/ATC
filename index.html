@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+       /* Set the size of the div element that contains the map */
+      #map {
+        height: 550px;  /* The height is 400 pixels */
+        width: 80%;  /* The width is the width of the web page */
+       }
+    </style>
+  </head>
+  <body>
+    <h3>Appalachian Trail</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+    <script>
+// Initialize and add the map
+    function initMap() {
+        
+      var hq = {lat: 36.6337, lng: -81.7837};
+      // The map, centered at Conservancy HQ in Damascus, VA.
+      var map = new google.maps.Map(
+          document.getElementById('map'), {zoom: 4, center: hq});
+
+        var atCentLine = 'data/at_cent_small.geojson'
+        map.data.loadGeoJson(atCentLine);
+    };
+
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8k09vVP7UOyx1IxMo-zoqFRcRTUo-vCw&callback=initMap">
+    
+    
+    </script>
+  </body>
+</html>
