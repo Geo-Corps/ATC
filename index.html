@@ -16,24 +16,28 @@
     <script>
 // Initialize and add the map
     function initMap() {
+        
         var hq = {lat: 36.6337, lng: -81.7837};
         // The map, centered at Conservancy HQ in Damascus, VA.
         var map = new google.maps.Map(
-          document.getElementById('map'), {zoom: 4, center: hq, styles: stylesATC});
-        
+          document.getElementById('map'), {zoom: 4, center: hq});
+
         // Set geojson to full URL to be able to load the layer locally, due to CORS error
         var atCentLine = 'https://geo-corps.github.io/ATC/data/at_cent_small.geojson' 
         map.data.loadGeoJson(atCentLine);
+
     };
-    function styleMap() {
-        $.getJSON('https://geo-corps.github.io/ATC/basemap-style.json', function(data) { 
-        stylesATC = data;
-        });
-    };
+
     </script>
     <!--Load APIs and execute early functions -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
+    function styleMap() {
+        $.getJSON('https://geo-corps.github.io/ATC/basemap-style.json', function(data) { 
+        stylesATC = data;
+        console.log('h')
+        });
+    };
     // Run styleMap function to load in base-map style file before map loads
     styleMap();
     </script>
