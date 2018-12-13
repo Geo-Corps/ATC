@@ -16,26 +16,29 @@
     <script>
 // Initialize and add the map
     function initMap() {
+        var hq = {lat: 36.6337, lng: -81.7837};
+        // The map, centered at Conservancy HQ in Damascus, VA.
+        var map = new google.maps.Map(
+          document.getElementById('map'), {zoom: 4, center: hq, styles: stylesATC});
         
-      var hq = {lat: 36.6337, lng: -81.7837};
-      // The map, centered at Conservancy HQ in Damascus, VA.
-      var map = new google.maps.Map(
-          document.getElementById('map'), {zoom: 4, center: hq});
-
-        var atCentLine = 'data/at_cent_small.geojson'
+        // Set geojson to full URL to be able to load the layer locally, due to CORS error
+        var atCentLine = 'https://geo-corps.github.io/ATC/data/at_cent_small.geojson' 
         map.data.loadGeoJson(atCentLine);
     };
-
+    function styleMap() {
+        $.getJSON('https://geo-corps.github.io/ATC/basemap-style.json', function(data) { 
+        stylesATC = data;
+        });
+    };
     </script>
-    <!--Load the API from the specified URL
-    * The async attribute allows the browser to render the page while the API loads
-    * The key parameter will contain your own API key (which is not needed for this tutorial)
-    * The callback parameter executes the initMap() function
-    -->
+    <!--Load APIs and execute early functions -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    // Run styleMap function to load in base-map style file before map loads
+    styleMap();
+    </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8k09vVP7UOyx1IxMo-zoqFRcRTUo-vCw&callback=initMap">
-    
-    
     </script>
   </body>
 </html>
