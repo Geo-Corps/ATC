@@ -6,7 +6,7 @@
     </style>
   </head>
   <body>
-    <h3>Appalachian Trail</h3>
+    <h3><div id='title'>Appalachian Trail</div></h3>
     <!--The div element for the map -->
     <div id="map"></div>
     <script>
@@ -31,11 +31,9 @@
         // Load all layers and style rules
         atCentLineLayer.loadGeoJson(atCentLineSrc);
         atCentLineLayer.setStyle({
-          fillColor: 'green',
-          strokeColor: 'green',
+          strokeColor: 'red',
           strokeWeight: 3
         });
-        
         
         var atShelterIconStyle = {
             url: 'https://geo-corps.github.io/ATC/data/icons/roofing-contractor.svg',
@@ -49,7 +47,7 @@
         
         var atParkingIconStyle = {
             url: 'https://geo-corps.github.io/ATC/data/icons/parking.svg',
-            scaledSize: new google.maps.Size(20, 20)
+            scaledSize: new google.maps.Size(10, 10)
         }
                 
         atParkingLayer.loadGeoJson(atParkingSrc);
