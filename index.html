@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-       /* Set the size of the div element that contains the map */
-      #map {
-        height: 550px;  /* The height is 400 pixels */
-        width: 80%;  /* The width is the width of the web page */
-       }
+    <link rel="stylesheet" href="css/styles.css">
+    <style>    
     </style>
   </head>
   <body>
@@ -41,17 +37,30 @@
         });
         
         
-        atSheltersLayer.data.loadGeoJson(atSheltersSrc);
+        var atShelterIconStyle = {
+            url: 'https://geo-corps.github.io/ATC/data/icons/roofing-contractor.svg',
+            scaledSize: new google.maps.Size(20, 20)
+        }
+        
+        atSheltersLayer.loadGeoJson(atSheltersSrc);
         atSheltersLayer.setStyle({
-          icon: 'https://geo-corps.github.io/ATC/data/icons/roofing-contractor.svg'
+          icon: atShelterIconStyle
         });
         
-        
-//        map.data.loadGeoJson(atParking);
+        var atParkingIconStyle = {
+            url: 'https://geo-corps.github.io/ATC/data/icons/parking.svg',
+            scaledSize: new google.maps.Size(20, 20)
+        }
+                
+        atParkingLayer.loadGeoJson(atParkingSrc);
+        atParkingLayer.setStyle({
+          icon: atParkingIconStyle
+        });
         
         // Add Layers to Map
         atCentLineLayer.setMap(map);
         atSheltersLayer.setMap(map);
+        atParkingLayer.setMap(map);
 
     };
 
