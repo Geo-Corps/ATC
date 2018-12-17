@@ -22,9 +22,36 @@
         var map = new google.maps.Map(
           document.getElementById('map'), {zoom: 4, center: hq});
 
+        // Set up empty data layers for data sources
+        var atCentLineLayer = new google.maps.Data();
+        var atSheltersLayer = new google.maps.Data();
+        var atParkingLayer = new google.maps.Data();
+        
         // Set geojson to full URL to be able to load the layer locally, due to CORS error
-        var atCentLine = 'https://geo-corps.github.io/ATC/data/at_cent_small.geojson' 
-        map.data.loadGeoJson(atCentLine);
+        var atCentLineSrc = 'https://geo-corps.github.io/ATC/data/at_cent_small.geojson'
+        var atSheltersSrc = 'https://geo-corps.github.io/ATC/data/at_shelters.geojson'
+        var atParkingSrc = 'https://geo-corps.github.io/ATC/data/at_parking.geojson'
+        
+        // Load all layers and style rules
+        atCentLineLayer.loadGeoJson(atCentLineSrc);
+        atCentLineLayer.setStyle({
+          fillColor: 'green',
+          strokeColor: 'green',
+          strokeWeight: 3
+        });
+        
+        
+        atSheltersLayer.data.loadGeoJson(atSheltersSrc);
+        atSheltersLayer.setStyle({
+          icon: 'https://geo-corps.github.io/ATC/data/icons/roofing-contractor.svg'
+        });
+        
+        
+//        map.data.loadGeoJson(atParking);
+        
+        // Add Layers to Map
+        atCentLineLayer.setMap(map);
+        atSheltersLayer.setMap(map);
 
     };
 
