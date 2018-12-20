@@ -1,15 +1,53 @@
 /* Set the size of the div element that contains the map */
-h3 {
-    color: black;
-    font-family: arial, 'Roboto Condensed', sans-serif; 
+body {
+    background-color: white;
 }
+h3 {
+    color: burlywood;
+    font-family: 'Holtwood One SC', serif; 
+}
+
 #map {
-    height: 550px;  /* The height is 400 pixels */
-    width: 100%;  /* The width is the width of the web page */
-    margin: 0px auto;
+    height: 550px; /* was 550px */
+    width: 100%;
+    margin: 1px auto;
     display: inline-block;
+    position: absolute;
 }
 #title {
+    color: #d8a74c;
+    font-family: 'Holtwood One SC', serif; 
     position: center;
     text-align: center;
+    z-index:1000;
+    position: relative;
+    padding: 1px;
+    text-shadow: 2px 2px 4px #000000;
+}
+.map-container{
+  position: relative;
+  width: 100%;
+  height: 550px;
+}
+.button {
+  width: 100px;
+  background-color: #d8a74c;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  font-family: 'Holtwood One SC', serif;
+  box-shadow: 1px 2px 5px grey;
+/*  margin: 0 auto;    */
+  margin: 3px 10px;
+  cursor: pointer;
+  display: block;
+  z-index:1000;
+  position: relative;
+}
+.btn:focus {
+  outline: none;
 }

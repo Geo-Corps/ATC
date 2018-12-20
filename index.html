@@ -2,13 +2,20 @@
 <html>
   <head>
     <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Holtwood+One+SC" rel="stylesheet">
     <style>    
     </style>
   </head>
   <body>
-    <h3><div id='title'>Appalachian Trail</div></h3>
     <!--The div element for the map -->
+    <div class="canvas-container">
     <div id="map"></div>
+        <div id='title'>Appalachian Trail</div>
+        <br><br><br>
+    <input type="button" class="button" id='btn-atCentLine' value="The Trail">
+    <input type="button" class="button" id='btn-atShelters' value="Cabins">
+    <input type="button" class="button" id='btn-atParking' value="Parking">
+    </div>
     <script>
 // Initialize and add the map
     function initMap() {
@@ -16,7 +23,16 @@
         var hq = {lat: 36.6337, lng: -81.7837};
         // The map, centered at Conservancy HQ in Damascus, VA.
         var map = new google.maps.Map(
-          document.getElementById('map'), {zoom: 4, center: hq});
+          document.getElementById('map'), {
+              zoom: 4,
+              center: hq,
+              mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.BOTTOM_CENTER
+                },
+              streetViewControl: true
+          });
 
         // Set up empty data layers for data sources
         var atCentLineLayer = new google.maps.Data();
@@ -56,15 +72,57 @@
         });
         
         // Add Layers to Map
+        
         atCentLineLayer.setMap(map);
-        atSheltersLayer.setMap(map);
-        atParkingLayer.setMap(map);
+//        atSheltersLayer.setMap(map);
+//        atParkingLayer.setMap(map);
+        
+        var atCentLineStatus = true;
+        $("#btn-atCentLine").click(function() {
+            $(this).trigger("blur"); // To dissable focus on button when clicked - temporary solution
+            if (atCentLineStatus) {
+                atCentLineLayer.setMap(null);
+                atCentLineStatus = false;
+            }
+            else {
+                atCentLineLayer.setMap(map);
+                atCentLineStatus = true;
+            }
+        });
+        var atSheltersStatus = false;
+        $("#btn-atShelters").click(function() {
+            $(this).trigger("blur");
+            if (atSheltersStatus) {
+                atSheltersLayer.setMap(null);
+                atSheltersStatus = false;
+            }
+            else {
+                atSheltersLayer.setMap(map);
+                atSheltersStatus = true;
+            }
+        });
+        var atParkingStatus = false;
+        $("#btn-atParking").click(function() {
+            $(this).trigger("blur");
+            if (atParkingStatus) {
+                atParkingLayer.setMap(null);
+                atParkingStatus = false;
+            }
+            else {
+                atParkingLayer.setMap(map);
+                atParkingStatus = true;
+            }
+        });
+        
+//        $("#btn-atCentLine").off('click');
 
     };
 
     </script>
     <!--Load APIs and execute early functions -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      
+      
     <script>
     function styleMap() {
         $.getJSON('https://geo-corps.github.io/ATC/basemap-style.json', function(data) { 
