@@ -13,10 +13,11 @@
         <div id='title'>Appalachian Trail</div>
         <div id='info-panel2'>
             <div class='layer-panel'>
-                <div class='layer-panel-title'>Map Layer selection///</div>
+                <div class='layer-panel-title'>selection///</div>
             <div class='layer-selector'>The Trail</div>
             <div class='layer-selector'>Shelters</div>
             <div class='layer-selector'>Parking</div>
+                
                 </div>
             
 <!--
@@ -307,8 +308,8 @@
 //        var atSheltersLayer = map.data.loadGeoJson('https://geo-corps.github.io/ATC/data/at_shelters.geojson', {idPropertyName: 'SHELTER' });
         
         map.data.setStyle(function(feature) {
-            console.log(feature.getId());
-            console.log(feature.getProperty('YEAR_BUILT'));
+//            console.log(feature.getId());
+//            console.log(feature.getProperty('YEAR_BUILT'));
 //            var layerType = feature.getProperty('ascii');
 //            var iconRule = ascii > 91 ? 'red' : 'blue';
             return {

@@ -23,7 +23,7 @@ h3 {
     position: absolute;
 }
 #title {
-    color: #d8a74c;
+    color: white;
     font-family: 'Holtwood One SC', serif; 
     position: center;
     text-align: center;
@@ -41,8 +41,18 @@ h3 {
     position: relative;
     padding: 0px 0px;
     font-size: small;
-    background-color: rgba(173, 195, 133, 0.63);
+/*    background-color: rgba(173, 195, 133, 0.63);*/
+/*    background-color: rgba(123, 143, 255, 0.63);*/
+/*    background-image: url('hiker_on_cliff_nobkgrnd_top.png');*/
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border-style: solid;
+    border-color: black;
 }
+#info-panel2::after {
+    opacity: 0.5;
+}
+
 .info-card {
 /*    background-color: whitesmoke;*/
 /*    width: 150px;*/
@@ -50,6 +60,7 @@ h3 {
 /*    border-width: 1px;*/
     text-align: center;
     margin: 0px 0px;
+    color: white;
 /*    box-shadow: 1px 2px 5px grey;*/
 /*    padding: 0px 10px;*/
 /*    margin-left: 12px;*/
@@ -64,6 +75,7 @@ h3 {
 .layer-panel-title {
     font-family: 'Holtwood One SC', serif;
     font-size: 10px;
+    color: white;
     
 }
 .layer-selector {
@@ -83,7 +95,7 @@ h3 {
     font-family: 'Holtwood One SC', serif;
     font-size: 15px;
 /*    text-shadow: 2px 2px 4px #000000;*/
-    color: black;
+    color: white;
 }
 .map-container{
   position: relative;
