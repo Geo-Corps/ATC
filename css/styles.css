@@ -6,23 +6,98 @@ h3 {
     color: burlywood;
     font-family: 'Holtwood One SC', serif; 
 }
-
+#button-container {
+    background-color: aquamarine;
+    margin: 10px;
+    padding: 2px;
+    width: 50px;
+}
+#canvas-container {
+    margin-left: 0px;
+}
 #map {
     height: 550px; /* was 550px */
     width: 100%;
     margin: 1px auto;
     display: inline-block;
     position: absolute;
+    border-style: solid;
+    border-color: black;
 }
 #title {
-    color: #d8a74c;
+    color: white;
     font-family: 'Holtwood One SC', serif; 
     position: center;
     text-align: center;
     z-index:1000;
-    position: relative;
-    padding: 1px;
+    position: absolute;
+    padding: 1px 1px;
+    margin-left: 50%;
     text-shadow: 2px 2px 4px #000000;
+}
+#info-panel2 {
+    height: 550px;
+    width: 240px;
+    float: left;
+    z-index:1000;
+    position: relative;
+    padding: 0px 0px;
+    font-size: small;
+/*    background-color: rgba(173, 195, 133, 0.63);*/
+/*    background-color: rgba(123, 143, 255, 0.63);*/
+    background-image: url('hiker_on_cliff_green2.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border-style: solid;
+    border-color: black;
+}
+#info-panel2::after {
+    opacity: 0.5;
+}
+
+.info-card {
+/*    background-color: whitesmoke;*/
+/*    width: 150px;*/
+/*    border-style: none;*/
+/*    border-width: 1px;*/
+    text-align: center;
+    margin: 0px 0px;
+    color: white;
+/*    box-shadow: 1px 2px 5px grey;*/
+/*    padding: 0px 10px;*/
+/*    margin-left: 12px;*/
+}
+.info-card li {
+    font-size: small;
+}
+.layer-panel {
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+.layer-panel-title {
+    font-family: 'Holtwood One SC', serif;
+    font-size: 10px;
+    color: white;
+    
+}
+.layer-selector {
+    font-family: 'Holtwood One SC', serif;
+    font-size: 20px;
+/*    box-shadow: 1px 2px 5px grey;*/
+    color: white;
+    margin: 0px 40px;
+    text-align: center;
+    
+}
+.layer-selector:hover {
+    color: #e6e6e6;
+    cursor: pointer;
+}
+.layer-title {
+    font-family: 'Holtwood One SC', serif;
+    font-size: 15px;
+/*    text-shadow: 2px 2px 4px #000000;*/
+    color: white;
 }
 .map-container{
   position: relative;
@@ -37,14 +112,14 @@ h3 {
   padding: 5px 10px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
+  display: inherit;
   font-size: 10px;
   font-family: 'Holtwood One SC', serif;
   box-shadow: 1px 2px 5px grey;
 /*  margin: 0 auto;    */
-  margin: 3px 10px;
+  margin: 3px 2px;
   cursor: pointer;
-  display: block;
+/*  display: block;*/
   z-index:1000;
   position: relative;
 }

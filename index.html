@@ -8,15 +8,28 @@
   </head>
   <body>
     <!--The div element for the map -->
-    <div class="canvas-container">
+    <div id="canvas-container">
     <div id="map"></div>
         <div id='title'>Appalachian Trail</div>
-        <br><br><br>
-    <input type="button" class="button" id='btn-atCentLine' value="The Trail">
+        <div id='info-panel2'>
+            <div class='layer-panel'>
+                <div class='layer-panel-title'>selection///</div>
+            <div class='layer-selector' id='btn-atCentLine'>The Trail</div>
+            <div class='layer-selector' id='btn-atShelters'>Shelters</div>
+            <div class='layer-selector' id='btn-atParking'>Parking</div>
+                
+                </div>
+            
+<!--
+            <input type="button" class="button" id='btn-atCentLine' value="The Trail">
     <input type="button" class="button" id='btn-atShelters' value="Cabins">
     <input type="button" class="button" id='btn-atParking' value="Parking">
-    </div>
+-->
+            <div class="info-card" id='first-card'></div>
+        </div>
+        </div>
     <script>
+        
 // Initialize and add the map
     function initMap() {
         
@@ -31,7 +44,7 @@
                     style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
                     position: google.maps.ControlPosition.BOTTOM_CENTER,
                     disableDefaultUI: true,
-                    mapTypeIds: [google.maps.MapTypeId.TERRAIN, google.maps.MapTypeId.SATELLITE,  google.maps.MapTypeId.HYBRID]
+                    mapTypeIds: [google.maps.MapTypeId.TERRAIN, google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.HYBRID]
                 },
               mapTypeId: google.maps.MapTypeId.TERRAIN,
               streetViewControl: true,
@@ -280,11 +293,134 @@
                   ]
                }
             ]
+          }
+        );
+        
+        // Trail Line
+        
+//        $.getJSON( "data/at_cent_small.geojson", function( data ) {
+//            var atCentLineLayer = map.data.addGeoJson(data, { idPropertyName: 'CENT_LINE' });
+//          
+//        });
+        
+        
+        // Parking Data
+        
+        var atParkingIconStyle = {
+            url: 'https://geo-corps.github.io/ATC/data/icons/parking.svg',
+            scaledSize: new google.maps.Size(10, 10)
+        }
+        
+        
+                
+//        atParkingLayer.loadGeoJson(atParkingSrc);
+//        atParkingLayer.setStyle({
+//          icon: atParkingIconStyle
+//        });
+        
+        $.getJSON( "data/at_parking.geojson", function( data ) {
+            var atParkingLayer = map.data.addGeoJson(data, { idPropertyName: 'PARKING' });
+            atParkingLayer.forEach(function (feature) {
+                if(feature.getProperty('LAYERID')=="PARKING") {
+              console.log('its a parking spot !!')
+            // override existing style for this feature
+                    map.data.overrideStyle(feature, {icon: atParkingIconStyle})
+            
+          };
+            })
           });
+//        map.data.setStyle(function(feature) {
+//            return {
+//              icon: atParkingIconStyle,
+//            };
+//        });
+        
+        // Shelter Data
+        
+        var atShelterIconStyle = {
+            url: 'https://geo-corps.github.io/ATC/data/icons/roofing-contractor.svg',
+            scaledSize: new google.maps.Size(20, 20)
+        }
+        
+        $.getJSON( "data/at_shelters.geojson", function( data ) {
+            var atSheltersLayer = map.data.addGeoJson(data, { idPropertyName: 'SHELTER' });
+            atSheltersLayer.forEach(function (feature) {
+                if(feature.getProperty('LAYERID')=="SHELTER") {
+              console.log('its a shelter !!')
+            // override existing style for this feature
+                    map.data.overrideStyle(feature, {icon: atShelterIconStyle})
+          };
+            })
+//            data.setMap(map)
+        });
+        
+//        var atSheltersLayer = map.data.loadGeoJson('https://geo-corps.github.io/ATC/data/at_shelters.geojson', {idPropertyName: 'SHELTER' });
+        
+//        map.data.setStyle(function(feature) {
+////            console.log(feature.getId());
+////            console.log(feature.getProperty('LAYERID'));
+//            
+//            feature.forEachProperty {
+//                console.log
+//            }
+//            var layerType = feature.getProperty('LAYERID');
+//            console.log(layerType)
+//            if (layerType = "CENT_LINE") {
+//                  return {
+//                      strokeColor: 'red',
+//                      strokeWeight: 3
+//                    };
+//                };
+//            });
+        
+//        map.data.setStyle(function(feature) {
+//            var layerType = feature.getProperty('LAYERID');
+//            if (layerType = 'SHELTER') {
+//                    console.log('its a shelter')
+//                  return {
+//                      icon: atShelterIconStyle
+//                    };
+//                }
+//            });
+//        map.data.setStyle(function(feature) {
+//            var layerType = feature.getProperty('LAYERID');
+//            if (layerType = "PARKING") {
+//                    return {
+//                      icon: atParkingIconStyle
+//                    };
+//                }
+//            });
+        
+//        map.data.forEach(function(feature) {
+//            console.log(feature);
+//          // is feature to be changed
+//          if(feature.getProperty('LAYERID')=="SHELTER") {
+//              console.log('its a shelter !!')
+//            // override existing style for this feature
+//            overrideStyle(feature,{
+//                      icon: atShelterIconStyle
+//                    });
+//          }
+//        });
+//        
+        map.data.addListener('click', function(event) {
+            console.log(event.feature.getId());
+            console.log(event.feature.getProperty('YEAR_BUILT'));
+          });
+        
+        
+//        console.log(atCentLineLayer.getId());
+        
+        map.data.addListener('mouseover', function(event) {
+//            console.log(event.feature);
+            $('#first-card').html("<div class='layer-title'>" + event.feature.getProperty('STATUS') + "</div><br>" + event.feature.getProperty('Name') + "<br>Built in " + event.feature.getProperty('YEAR_BUILT') + "<br>" + event.feature.getProperty('Elev_feet') + " Ft. Elev.<br>" + event.feature.getProperty('ROOF') + "<br>" + event.feature.getProperty('STATE') + "<br>" + event.feature.getProperty('TRAIL_CLUB')+ "<br>Comments: " + event.feature.getProperty('COMMENTS') + "<br>Source: " + event.feature.getProperty('SOURCE')+ "<br>");
+//          document.getElementById('first-card').textContent =
+//              event.feature.getProperty('Status') + "<br>" + event.feature.getProperty('Name') ;
+        });
 
         // Set up empty data layers for data sources
         var atCentLineLayer = new google.maps.Data();
-        var atSheltersLayer = new google.maps.Data();
+//        var atSheltersLayer = new google.maps.Data();
         var atParkingLayer = new google.maps.Data();
         
         // Set geojson to full URL to be able to load the layer locally, due to CORS error
@@ -299,27 +435,20 @@
           strokeWeight: 3
         });
         
-        var atShelterIconStyle = {
-            url: 'https://geo-corps.github.io/ATC/data/icons/roofing-contractor.svg',
-            scaledSize: new google.maps.Size(20, 20)
-        }
+//        var atShelterIconStyle = {
+//            url: 'https://geo-corps.github.io/ATC/data/icons/roofing-contractor.svg',
+//            scaledSize: new google.maps.Size(20, 20)
+//        }
         
-        atSheltersLayer.loadGeoJson(atSheltersSrc);
-        atSheltersLayer.setStyle({
-          icon: atShelterIconStyle
-        });
+//        atSheltersLayer.loadGeoJson(atSheltersSrc);
+//        atSheltersLayer.setStyle({
+//          icon: atShelterIconStyle
+//        });
         
-        var atParkingIconStyle = {
-            url: 'https://geo-corps.github.io/ATC/data/icons/parking.svg',
-            scaledSize: new google.maps.Size(10, 10)
-        }
-                
-        atParkingLayer.loadGeoJson(atParkingSrc);
-        atParkingLayer.setStyle({
-          icon: atParkingIconStyle
-        });
+        
         
         // Add Layers to Map
+        
         
         atCentLineLayer.setMap(map);
 //        atSheltersLayer.setMap(map);
@@ -340,8 +469,16 @@
         var atSheltersStatus = false;
         $("#btn-atShelters").click(function() {
             $(this).trigger("blur");
+            console.log("shelter button click");
             if (atSheltersStatus) {
-                atSheltersLayer.setMap(null);
+//                atSheltersLayer.setMap(null);
+                map.data.forEach(function (feature) {
+                    if(feature.getProperty('LAYERID')=="SHELTER") {
+//                  console.log('its a shelter !!')
+                // override existing style for this feature
+                        map.data.overrideStyle(feature, {visible: false})
+              };
+                })
                 atSheltersStatus = false;
             }
             else {
@@ -365,6 +502,10 @@
 //        $("#btn-atCentLine").off('click');
 
     };
+        
+        // User & Data Ineraction
+        
+        
 
     </script>
     <!--Load APIs and execute early functions -->
