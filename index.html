@@ -14,9 +14,9 @@
         <div id='info-panel2'>
             <div class='layer-panel'>
                 <div class='layer-panel-title'>selection///</div>
-            <div class='layer-selector'>The Trail</div>
-            <div class='layer-selector'>Shelters</div>
-            <div class='layer-selector'>Parking</div>
+            <div class='layer-selector' id='btn-atCentLine'>The Trail</div>
+            <div class='layer-selector' id='btn-atShelters'>Shelters</div>
+            <div class='layer-selector' id='btn-atParking'>Parking</div>
                 
                 </div>
             
@@ -295,6 +295,48 @@
             ]
           }
         );
+        
+        // Trail Line
+        
+//        $.getJSON( "data/at_cent_small.geojson", function( data ) {
+//            var atCentLineLayer = map.data.addGeoJson(data, { idPropertyName: 'CENT_LINE' });
+//          
+//        });
+        
+        
+        // Parking Data
+        
+        var atParkingIconStyle = {
+            url: 'https://geo-corps.github.io/ATC/data/icons/parking.svg',
+            scaledSize: new google.maps.Size(10, 10)
+        }
+        
+        
+                
+//        atParkingLayer.loadGeoJson(atParkingSrc);
+//        atParkingLayer.setStyle({
+//          icon: atParkingIconStyle
+//        });
+        
+        $.getJSON( "data/at_parking.geojson", function( data ) {
+            var atParkingLayer = map.data.addGeoJson(data, { idPropertyName: 'PARKING' });
+            atParkingLayer.forEach(function (feature) {
+                if(feature.getProperty('LAYERID')=="PARKING") {
+              console.log('its a parking spot !!')
+            // override existing style for this feature
+                    map.data.overrideStyle(feature, {icon: atParkingIconStyle})
+            
+          };
+            })
+          });
+//        map.data.setStyle(function(feature) {
+//            return {
+//              icon: atParkingIconStyle,
+//            };
+//        });
+        
+        // Shelter Data
+        
         var atShelterIconStyle = {
             url: 'https://geo-corps.github.io/ATC/data/icons/roofing-contractor.svg',
             scaledSize: new google.maps.Size(20, 20)
@@ -302,21 +344,65 @@
         
         $.getJSON( "data/at_shelters.geojson", function( data ) {
             var atSheltersLayer = map.data.addGeoJson(data, { idPropertyName: 'SHELTER' });
-          
+            atSheltersLayer.forEach(function (feature) {
+                if(feature.getProperty('LAYERID')=="SHELTER") {
+              console.log('its a shelter !!')
+            // override existing style for this feature
+                    map.data.overrideStyle(feature, {icon: atShelterIconStyle})
+          };
+            })
+//            data.setMap(map)
         });
         
 //        var atSheltersLayer = map.data.loadGeoJson('https://geo-corps.github.io/ATC/data/at_shelters.geojson', {idPropertyName: 'SHELTER' });
         
-        map.data.setStyle(function(feature) {
-//            console.log(feature.getId());
-//            console.log(feature.getProperty('YEAR_BUILT'));
-//            var layerType = feature.getProperty('ascii');
-//            var iconRule = ascii > 91 ? 'red' : 'blue';
-            return {
-              icon: atShelterIconStyle,
-            };
-        });
+//        map.data.setStyle(function(feature) {
+////            console.log(feature.getId());
+////            console.log(feature.getProperty('LAYERID'));
+//            
+//            feature.forEachProperty {
+//                console.log
+//            }
+//            var layerType = feature.getProperty('LAYERID');
+//            console.log(layerType)
+//            if (layerType = "CENT_LINE") {
+//                  return {
+//                      strokeColor: 'red',
+//                      strokeWeight: 3
+//                    };
+//                };
+//            });
         
+//        map.data.setStyle(function(feature) {
+//            var layerType = feature.getProperty('LAYERID');
+//            if (layerType = 'SHELTER') {
+//                    console.log('its a shelter')
+//                  return {
+//                      icon: atShelterIconStyle
+//                    };
+//                }
+//            });
+//        map.data.setStyle(function(feature) {
+//            var layerType = feature.getProperty('LAYERID');
+//            if (layerType = "PARKING") {
+//                    return {
+//                      icon: atParkingIconStyle
+//                    };
+//                }
+//            });
+        
+//        map.data.forEach(function(feature) {
+//            console.log(feature);
+//          // is feature to be changed
+//          if(feature.getProperty('LAYERID')=="SHELTER") {
+//              console.log('its a shelter !!')
+//            // override existing style for this feature
+//            overrideStyle(feature,{
+//                      icon: atShelterIconStyle
+//                    });
+//          }
+//        });
+//        
         map.data.addListener('click', function(event) {
             console.log(event.feature.getId());
             console.log(event.feature.getProperty('YEAR_BUILT'));
@@ -343,7 +429,7 @@
         var atParkingSrc = 'https://geo-corps.github.io/ATC/data/at_parking.geojson'
         
         // Load all layers and style rules
-//        atCentLineLayer.loadGeoJson(atCentLineSrc);
+        atCentLineLayer.loadGeoJson(atCentLineSrc);
         atCentLineLayer.setStyle({
           strokeColor: 'red',
           strokeWeight: 3
@@ -359,15 +445,7 @@
 //          icon: atShelterIconStyle
 //        });
         
-        var atParkingIconStyle = {
-            url: 'https://geo-corps.github.io/ATC/data/icons/parking.svg',
-            scaledSize: new google.maps.Size(10, 10)
-        }
-                
-        atParkingLayer.loadGeoJson(atParkingSrc);
-        atParkingLayer.setStyle({
-          icon: atParkingIconStyle
-        });
+        
         
         // Add Layers to Map
         
@@ -391,8 +469,16 @@
         var atSheltersStatus = false;
         $("#btn-atShelters").click(function() {
             $(this).trigger("blur");
+            console.log("shelter button click");
             if (atSheltersStatus) {
-                atSheltersLayer.setMap(null);
+//                atSheltersLayer.setMap(null);
+                map.data.forEach(function (feature) {
+                    if(feature.getProperty('LAYERID')=="SHELTER") {
+//                  console.log('its a shelter !!')
+                // override existing style for this feature
+                        map.data.overrideStyle(feature, {visible: false})
+              };
+                })
                 atSheltersStatus = false;
             }
             else {

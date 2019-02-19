@@ -21,6 +21,8 @@ h3 {
     margin: 1px auto;
     display: inline-block;
     position: absolute;
+    border-style: solid;
+    border-color: black;
 }
 #title {
     color: white;
@@ -30,7 +32,7 @@ h3 {
     z-index:1000;
     position: absolute;
     padding: 1px 1px;
-    margin-left: 300px;
+    margin-left: 50%;
     text-shadow: 2px 2px 4px #000000;
 }
 #info-panel2 {
@@ -43,7 +45,7 @@ h3 {
     font-size: small;
 /*    background-color: rgba(173, 195, 133, 0.63);*/
 /*    background-color: rgba(123, 143, 255, 0.63);*/
-/*    background-image: url('hiker_on_cliff_nobkgrnd_top.png');*/
+    background-image: url('hiker_on_cliff_green2.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     border-style: solid;
